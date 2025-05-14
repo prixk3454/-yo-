@@ -2,26 +2,74 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Para Ella</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta para Ella</title>
   <style>
     body {
+      margin: 0;
       background-color: #ffeef2;
       font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    .envelope {
+      width: 300px;
+      height: 200px;
+      background-image: url('carta-cerrada.png');
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      transition: transform 0.8s ease, opacity 0.5s ease;
+      z-index: 2;
+    }
+
+    .envelope.opened {
+      transform: scale(1.5) translateY(-100px);
+      opacity: 0;
+    }
+
+    .letter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 90%;
+      max-width: 600px;
+      height: 90vh;
+      background-color: #fff0f5;
       color: #5a2a27;
-      margin: 0;
-      padding: 80px 20px 20px 20px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      overflow-y: auto;
+      z-index: 1;
+      transform: scale(0);
+      transition: transform 1s ease;
+    }
+
+    .letter.visible {
+      transform: scale(1);
     }
 
     h1, p {
       text-align: center;
-      margin: 0 10px 20px;
+      margin-bottom: 20px;
     }
 
     .music-floating {
       position: fixed;
-      top: 15px;
-      left: 15px;
+      top: 10px;
+      left: 10px;
       display: flex;
       align-items: center;
       background-color: #7c3f28;
@@ -30,7 +78,6 @@
       padding: 6px 12px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.3);
       z-index: 1000;
-      height: 60px;
     }
 
     .music-cover {
@@ -46,7 +93,6 @@
       display: flex;
       flex-direction: column;
       margin-left: 10px;
-      flex-grow: 1;
     }
 
     .track-title {
@@ -61,11 +107,6 @@
       margin-bottom: 3px;
     }
 
-    .music-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
     .music-buttons button {
       background: none;
       border: none;
@@ -76,15 +117,20 @@
 
     .stickers {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin: 20px;
+      margin-top: 20px;
     }
 
     .stickers img {
       width: 80px;
       height: 80px;
+    }
+
+    @media (max-width: 600px) {
+      .letter {
+        padding: 15px;
+        height: 85vh;
+      }
     }
   </style>
 </head>
@@ -104,9 +150,11 @@
     <audio id="audio" src="alas-rotas.mp3"></audio>
   </div>
 
-  <h1>for you</h1>
-  <div style="max-width: 800px; margin: 0 auto; background-color: #fff0f5; padding: 30px; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-  <p>Hola, buenas tardes o noches o cuando lo estés leyendo.</p>
+  <div class="container">
+    <div class="envelope" onclick="openEnvelope()"></div>
+    <div class="letter" id="letter">
+      <h1>Para ti</h1>
+     <p>Hola, buenas tardes o noches o cuando lo estés leyendo.</p>
 
   <p>Te quería decir unas cosas que en persona, por timidez, no te podría decir. También ya sé que tal vez esto no llegue a nada, que solo haya escrito esto y que no cambie nada, pero me siento más tranquilo sabiendo que sepas lo tanto que puedo expresar lo que siento. A solo irme sin más y dejar esto como algo inconcluso... Bueno, sin más alargar esta parte, aquí inicia la carta. Es la primera que hago.</p>
 
@@ -159,14 +207,19 @@
   <p>Y como dije, si no crees que pase nada en algún futuro, olvida todo, como si nunca nos hubiéramos conocido, por favor.<br>Y que no haya incomodidad, sería como lo último que pediría.</p>
 
   <p><em>Gracias.</em></p>
-</div>
-
-
-  <div class="stickers">
-    <img src="snoopy.png" alt="Snoopy" />
+      <!-- (Aquí va el resto de tu carta completa como en los mensajes anteriores) -->
+      <div class="stickers">
+        <img src="snoopy.png" alt="Snoopy" />
+      </div>
+    </div>
   </div>
 
   <script>
+    function openEnvelope() {
+      document.querySelector('.envelope').classList.add('opened');
+      document.getElementById('letter').classList.add('visible');
+    }
+
     const tracks = [
       {
         title: "Hasta la muerte",
@@ -226,4 +279,3 @@
   </script>
 </body>
 </html>
-
